@@ -4,17 +4,26 @@ import { Routes, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import News from "./components/News";
+import Article from "./components/Article";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <Header />
-      <News />
+      <Routes>
+        <Route path="/" element={<News />} />
+        <Route path="/article" element={<Article />} />
+      </Routes>
+
       <Footer />
     </>
   );
 }
 
 export default App;
+
+// <Switch>
+//      <Route path="/myElements/:elementId/properties" component={PropertiesPage}/>
+// </Switch>
+
+//

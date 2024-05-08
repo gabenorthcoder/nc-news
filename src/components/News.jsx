@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import Card from "./Card";
 import { getAllArticles } from "../api";
 
@@ -7,7 +9,6 @@ const News = () => {
   useEffect(() => {
     getAllArticles().then((result) => setArticles(result.articles));
   }, []);
-  console.log(articles);
   return (
     <div>
       <h1>News</h1>
@@ -15,6 +16,7 @@ const News = () => {
         return (
           <Card
             key={article.article_id}
+            id={article.article_id}
             topic={article.topic}
             title={article.title}
             article_img_url={article.article_img_url}
