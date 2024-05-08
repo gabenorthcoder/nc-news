@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 const Card = (props) => {
-  const { id } = props;
+  const { article_id } = props;
   return (
-    <Link to="/article" state={{ article_id: id }}>
+    <Link to={`/article/${article_id}`}>
       <section className="card">
         <h4>{props.topic}</h4>
         <h3>{props.title}</h3>

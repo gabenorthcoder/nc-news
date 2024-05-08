@@ -91,6 +91,9 @@ header {
   padding: 16px 32px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
+.link {
+  text-decoration: none;
+}
 
 header h1 {
   color: black;
@@ -109,6 +112,7 @@ footer {
 footer p {
   color: #ccc;
 }
+
 .card {
   background: #fff;
   border-radius: 7px;
