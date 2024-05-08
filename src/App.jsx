@@ -21,9 +21,3 @@ function App() {
 }
 
 export default App;
-
-// <Switch>
-//      <Route path="/myElements/:elementId/properties" component={PropertiesPage}/>
-// </Switch>
-
-//

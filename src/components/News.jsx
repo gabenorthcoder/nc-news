@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-
 import Card from "./Card";
 import { getAllArticles } from "../api";
 
@@ -27,7 +25,6 @@ const News = () => {
           />
         );
       })}
-      <Card />
     </div>
   );
 };
