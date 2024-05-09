@@ -34,3 +34,9 @@ export const postComment = async (article_id, username, comment) => {
   });
   return response;
 };
+
+export const deleteComment = async (comment_id) => {
+  console.log(comment_id);
+  const response = await Ncnews.delete(`comments/${comment_id}`);
+  return response;
+};

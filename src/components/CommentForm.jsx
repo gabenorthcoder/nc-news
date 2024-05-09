@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { postComment } from "../api";
-import { ConstructionOutlined, ContactPageSharp } from "@mui/icons-material";
 
 const CommentForm = ({
   article_id,
@@ -74,7 +73,7 @@ const CommentForm = ({
               ></textarea>
             </label>
             <label htmlFor="loader">
-              {loadingDone ? "Posting Successful...." : ""}
+              {loadingDone ? "Posting Successful!" : ""}
             </label>
             <button type="submit" disabled={isPostingComment ? true : false}>
               {isPostingComment ? "Posting Comment...." : " Add Comment"}
