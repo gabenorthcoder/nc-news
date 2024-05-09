@@ -1,20 +1,29 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import Card from "./Card";
 import { getAllArticles, getTopics } from "../api";
 import TopicButton from "./TopicButton";
+import Error from "./Error";
 
-const News = () => {
+const News = ({ error, setError }) => {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [articles, setArticles] = useState([]);
   const [topics, setTopics] = useState([]);
   const sortByQuery = searchParams.get("sort_by");
   const orderQuery = searchParams.get("order");
   useEffect(() => {
-    getTopics().then((result) => setTopics(result.topics));
+    getTopics()
+      .then((result) => setTopics(result.data.topics))
+      .catch((error) => setError(error.message));
   }, []);
   useEffect(() => {
-    getAllArticles().then((result) => setArticles(result.articles));
+    getAllArticles()
+      .then((result) => {
+        setArticles(result.data.articles);
+      })
+      .catch((error) => setError(error.message));
   }, []);
 
   const setSortOrder = (direction) => {
@@ -46,7 +55,9 @@ const News = () => {
       setSortBy(value);
     }
   };
-
+  if (error) {
+    return <Error error={error} />;
+  }
   return (
     <div>
       <h1>News</h1>
