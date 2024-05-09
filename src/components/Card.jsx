@@ -1,16 +1,24 @@
 import { Link } from "react-router-dom";
-const Card = (props) => {
-  const { article_id } = props;
+const Card = ({
+  article_id,
+  topic,
+  title,
+  article_img_url,
+  author,
+  comment_count,
+  votes,
+  created_at,
+}) => {
   return (
     <Link to={`/article/${article_id}`}>
       <section className="card">
-        <h4>{props.topic}</h4>
-        <h3>{props.title}</h3>
-        <img src={props.article_img_url} />
-        <p>Written By: {props.author}</p>
-        <p>{props.comment_count}</p>
-        <p>Votes: {props.votes}</p>
-        <p>On: {new Date(props.created_at).toDateString()}</p>
+        <h4>{topic}</h4>
+        <h3>{title}</h3>
+        <img src={article_img_url} />
+        <p>Written By: {author}</p>
+        <p>{comment_count}</p>
+        <p>Votes: {votes}</p>
+        <p>On: {new Date(created_at).toDateString()}</p>
       </section>
     </Link>
   );

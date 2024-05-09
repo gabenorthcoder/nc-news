@@ -5,6 +5,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import News from "./components/News";
 import Article from "./components/Article";
+import Topic from "./components/Topic";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<News />} />
         <Route path="/article/:article_id" element={<Article />} />
+        <Route path="/articles" element={<Topic />} />
       </Routes>
 
       <Footer />
