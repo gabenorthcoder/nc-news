@@ -26,3 +26,11 @@ export const updateVotes = async (article_id, vote) => {
   });
   return response.data;
 };
+
+export const postComment = async (article_id, username, comment) => {
+  const response = await Ncnews.post(`articles/${article_id}/comments`, {
+    username: username,
+    body: comment,
+  });
+  return response;
+};
