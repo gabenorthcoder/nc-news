@@ -7,11 +7,11 @@ const apiUri = "https://project-x8zn.onrender.com/api/";
 
 export const getAllArticles = async () => {
   const response = await ncNews.get("articles");
-  return response.data;
+  return response;
 };
 export const getTopics = async () => {
   const response = await ncNews.get("topics");
-  return response.data;
+  return response;
 };
 export const getArticlesByQuery = async (topic) => {
   const response = await ncNews.get(`articles?topic=${topic}`);
@@ -21,19 +21,19 @@ export const getArticlesByQuery = async (topic) => {
 
 export const getArticle = async (article_id) => {
   const response = await ncNews.get(`articles/${article_id}`);
-  return response.data;
+  return response;
 };
 
 export const getComments = async (article_id) => {
   const response = await ncNews.get(`articles/${article_id}/comments`);
-  return response.data;
+  return response;
 };
 
 export const updateVotes = async (article_id, vote) => {
   const response = await ncNews.patch(`articles/${article_id}`, {
     inc_votes: vote,
   });
-  return response.data;
+  return response;
 };
 
 export const postComment = async (article_id, username, comment) => {

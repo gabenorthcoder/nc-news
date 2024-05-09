@@ -3,15 +3,17 @@ import { useSearchParams } from "react-router-dom";
 import { getArticlesByQuery } from "../api";
 import Card from "./Card";
 
-const Topic = () => {
+const Topic = ({ error, setError }) => {
   const [articlesByTopic, setArticlesByTopic] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const topic = searchParams.get("topic");
 
   useEffect(() => {
-    getArticlesByQuery(topic).then((result) => {
-      setArticlesByTopic(result.articles);
-    });
+    getArticlesByQuery(topic)
+      .then((result) => {
+        setArticlesByTopic(result.articles);
+      })
+      .catch((error) => {});
   }, [searchParams]);
 
   return (

@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getArticle, getComments, updateVotes } from "../api";
 import { useParams } from "react-router-dom";
 import CommentCard from "./CommentCard";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import CommentForm from "./CommentForm";
+import Error from "./Error";
 
-const Article = () => {
+const Article = ({ error, setError }) => {
+  const navigate = useNavigate();
   const [fullArticle, setFullArticle] = useState({});
   const [comments, setComments] = useState([]);
   const [vote, setVote] = useState(0);
@@ -17,29 +20,47 @@ const Article = () => {
   const { article_id } = useParams();
 
   useEffect(() => {
-    getArticle(article_id).then((result) => {
-      setFullArticle(result.article);
-      setVote(result.article.votes);
-    });
+    getArticle(article_id)
+      .then((result) => {
+        setFullArticle(result.data.article);
+        setVote(result.data.article.votes);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        setError(error.message);
+      });
   }, [article_id]);
 
   useEffect(() => {
-    getComments(article_id).then((result) => setComments(result.comments));
+    getComments(article_id)
+      .then((result) => setComments(result.data.comments))
+      .catch((error) => setError(error.message));
   }, [commentCount]);
 
-  const handleUpVote = () => {
-    setVote(vote + 1);
-    updateVotes(article_id, 1).catch((error) => {
-      setVoteError(`Vote Error: ${error}`);
-    });
+  const handleVote = (e) => {
+    const { value } = e.target;
+    if (value === "down") {
+      setVote(vote - 1);
+      updateVotes(article_id, -1).catch((error) => {
+        setError(error.message);
+        setVoteError(`Vote Error: ${error}`);
+      });
+    } else {
+      setVote(vote + 1);
+      updateVotes(article_id, 1).catch((error) => {
+        setError(error.message);
+        setVoteError(`Vote Error: ${error}`);
+      });
+    }
   };
-  const handleDownVote = () => {
-    setVote(vote - 1);
-    updateVotes(article_id, -1).catch((error) => {
-      setVoteError(`Vote Error: ${error}`);
-    });
-  };
-
+  if (error) {
+    return (
+      <>
+        {" "}
+        <Error error={error} />
+      </>
+    );
+  }
   return (
     <section className="">
       {isCommenting ? (
@@ -61,13 +82,13 @@ const Article = () => {
             <p>Written By: {fullArticle.author}</p>
             {/* <p>{fullArticle.comment_count}</p> */}
             <p>On: {new Date(fullArticle.created_at).toDateString()}</p>
-            <button onClick={handleUpVote}>
+            <button onClick={handleVote} value={"up"}>
               <ThumbUpOutlinedIcon />
               {voteError}
             </button>
 
             <p>Votes: {vote}</p>
-            <button onClick={handleDownVote}>
+            <button onClick={handleVote} value={"down"}>
               <ThumbDownOutlinedIcon />
               {voteError}
             </button>
