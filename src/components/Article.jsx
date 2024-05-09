@@ -39,6 +39,10 @@ const Article = () => {
       setVoteError(`Vote Error: ${error}`);
     });
   };
+  // const handleDelete = (comment_id) => {
+  //   //verify username
+  // };
+
   return (
     <section className="">
       {isCommenting ? (
@@ -82,6 +86,9 @@ const Article = () => {
                   author={comment.author}
                   created_at={comment.created_at}
                   votes={comment.votes}
+                  commentCount={commentCount}
+                  setCommentCount={setCommentCount}
+                  // handleDelete={handleDelete}
                 />
               );
             })}
