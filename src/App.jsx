@@ -10,6 +10,7 @@ import Error from "./components/Error";
 
 function App() {
   const [error, setError] = useState(null);
+
   return (
     <>
       <Header />

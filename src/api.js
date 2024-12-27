@@ -16,7 +16,7 @@ export const getTopics = async () => {
 export const getArticlesByQuery = async (topic) => {
   const response = await ncNews.get(`articles?topic=${topic}`);
 
-  return response.data;
+  return response;
 };
 
 export const getArticle = async (article_id) => {
