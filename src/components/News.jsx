@@ -5,23 +5,22 @@ import Card from "./Card";
 import { getAllArticles, getTopics } from "../api";
 import TopicButton from "./TopicButton";
 import Error from "./Error";
+import Loader from "./Loader";
 
 const News = ({ error, setError }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [articles, setArticles] = useState([]);
-  const [topics, setTopics] = useState([]);
+
   const sortByQuery = searchParams.get("sort_by");
   const orderQuery = searchParams.get("order");
-  useEffect(() => {
-    getTopics()
-      .then((result) => setTopics(result.data.topics))
-      .catch((error) => setError(error.message));
-  }, []);
+
   useEffect(() => {
     getAllArticles()
       .then((result) => {
         setArticles(result.data.articles);
+        setIsLoading(false);
       })
       .catch((error) => setError(error.message));
   }, []);
@@ -55,18 +54,18 @@ const News = ({ error, setError }) => {
       setSortBy(value);
     }
   };
+
+  if (isLoading) {
+    return <Loader />;
+  }
   if (error) {
     return <Error error={error} />;
   }
   return (
     <div>
-      <h1>News</h1>
-      <div>
-        {topics.map((topic) => {
-          return <TopicButton key={topic.slug} slug={topic.slug} />;
-        })}
-      </div>
-      <div>
+      <h1 className="title">Latest NC News</h1>
+      <TopicButton />
+      <div className="select-style">
         <select onChange={handleSelect}>
           <option value="created_at">Sort By Date</option>
           <option value="comment_count"> Sort By Comment Count</option>
@@ -75,21 +74,26 @@ const News = ({ error, setError }) => {
           <option value="desc">Descending</option>
         </select>
       </div>
-      {articles.map((article) => {
-        return (
-          <Card
-            key={article.article_id}
-            article_id={article.article_id}
-            topic={article.topic}
-            title={article.title}
-            article_img_url={article.article_img_url}
-            author={article.author}
-            comment_count={article.comment_count}
-            votes={article.votes}
-            created_at={article.created_at}
-          />
-        );
-      })}
+
+      <section className="news-grid">
+        {articles.map((article) => {
+          return (
+            <div key={article.article_id}>
+              <Card
+                key={article.article_id}
+                article_id={article.article_id}
+                topic={article.topic}
+                title={article.title}
+                article_img_url={article.article_img_url}
+                author={article.author}
+                comment_count={article.comment_count}
+                votes={article.votes}
+                created_at={article.created_at}
+              />
+            </div>
+          );
+        })}
+      </section>
     </div>
   );
 };
